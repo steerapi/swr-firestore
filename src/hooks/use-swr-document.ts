@@ -9,7 +9,7 @@ import { isDev } from '../helpers/is-dev'
 import { withDocumentDatesParsed } from '../helpers/doc-date-parser'
 import { deleteDocument } from './static-mutations'
 
- 
+
 type Options<Doc extends Document = Document> = {
   /**
    * If `true`, sets up a real-time subscription to the Firestore backend.
@@ -95,7 +95,7 @@ export const getDocument = async <Doc extends Document = Document>(
     })
 
   // update the document in any collections listening to the same document
-  let collection: string | string[] = path.split(`/${data.id}`)
+  let collection: string | string[] = path.split(`/`).filter(Boolean)
 
   collection.pop() // remove last item, which is the /id
   collection = collection.join('/') // rejoin the path
@@ -169,7 +169,7 @@ const createListenerAsync = async <Doc extends Document = Document>(
 
       // update the document in any collections listening to the same document
       let collection: string | string[] = path
-        .split(`/${doc.id}`)
+        .split(`/`)
         .filter(Boolean)
       collection.pop() // remove last item, which is the /id
       collection = collection.join('/')
