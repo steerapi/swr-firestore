@@ -418,7 +418,7 @@ export const useCollection = <
   const swr = useSWR<Doc[] | null>(
     // if the path is null, this means we don't want to fetch yet.
     path === null ? null : [path, memoQueryString],
-    async (path: string, queryString: string) => {
+    async ([path, queryString]: [string, string]) => {
       if (shouldListen.current) {
         if (unsubscribeRef.current) {
           unsubscribeRef.current()
