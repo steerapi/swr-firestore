@@ -1,4 +1,4 @@
-import useSWR, { mutate, ConfigInterface } from 'swr'
+import useSWR, { mutate, SWRConfiguration } from 'swr'
 import type { SetOptions, FieldValue } from '@firebase/firestore-types'
 import { fuego } from '../context'
 import { useRef, useEffect, useCallback } from 'react'
@@ -36,7 +36,7 @@ type Options<Doc extends Document = Document> = {
    * Default: `true`
    */
   ignoreFirestoreDocumentSnapshotField?: boolean
-} & ConfigInterface<Doc | null>
+} & SWRConfiguration<Doc | null>
 
 type ListenerReturnType<Doc extends Document = Document> = {
   initialData: Doc
@@ -287,7 +287,7 @@ export const useDocument = <
     swrOptions
   )
 
-  const { data, isValidating, revalidate, mutate: connectedMutate, error } = swr
+  const { data, isValidating, mutate: connectedMutate, error } = swr
 
   // if listen changes,
   // we run revalidate.
@@ -307,9 +307,9 @@ export const useDocument = <
 
   // this MUST be after the previous effect to avoid duplicate initial validations.
   // only happens on updates, not initial mount.
-  const revalidateRef = useRef(swr.revalidate)
+  const revalidateRef = useRef(swr.mutate)
   useEffect(() => {
-    revalidateRef.current = swr.revalidate
+    revalidateRef.current = swr.mutate
   })
 
   useEffect(() => {
@@ -379,7 +379,7 @@ export const useDocument = <
   return {
     data,
     isValidating,
-    revalidate,
+    revalidate: connectedMutate,
     mutate: connectedMutate,
     error,
     set,

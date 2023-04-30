@@ -1,6 +1,6 @@
 {
   "name": "@steerapi/swr-firestore",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "SWR React hooks for Firestore, that you can actually use in production, on every screen.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -105,6 +105,6 @@
   "dependencies": {
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
-    "swr": "^0.2.0"
+    "swr": "^2.1.5"
   }
 }
